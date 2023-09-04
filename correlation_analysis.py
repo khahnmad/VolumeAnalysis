@@ -194,10 +194,55 @@ def compare_partial_timeframe(timeframe:int, category, start_time,displacement, 
 #     for p in partisanships:
 #         for d in range(1,13):
 #             compare_full_time_range(cat,p,d)
+#
+# import pandas as pd
+from collections import Counter
+df = pd.read_csv('subsample_partial_correlation_analysis.csv')
+corre_analysis = uf.import_csv('subsample_partial_correlation_analysis.csv')
 
+def find_frequent_partisanship_diplacement_pairs(data):
+    dp_pairs = [f"{x[0]} {x[2]}" for x in data]
+    counter = Counter(dp_pairs)
+    mc = counter.most_common(10)
+    outcome = []
+    for elt in mc:
+        split_ = elt[0].split(' ')
+        outcome.append(split_)
+    return outcome
 
-# Partial tiem frames
-results = [['displacement','category','partisanship','timeframe','starttime','correlation','pvalue']]
+def find_freq_part_displacement_cate_pairs(data):
+    dp_pairs = [f"{x[0]} {x[1]} {x[2]}" for x in data]
+    counter = Counter(dp_pairs)
+    mc = counter.most_common(10)
+    outcome = []
+    for elt in mc:
+        split_ = elt[0].split(' ')
+        outcome.append(split_)
+    return outcome
+
+def find_freq_part_displacement_cate_tf_pairs(data):
+    dp_pairs = [f"{x[0]} {x[1]} {x[2]} {x[3]}" for x in data]
+    counter = Counter(dp_pairs)
+    mc = counter.most_common(10)
+    outcome = []
+    for elt in mc:
+        split_ = elt[0].split(' ')
+        outcome.append(split_)
+    return outcome
+
+pd_pairs = find_frequent_partisanship_diplacement_pairs(corre_analysis)
+pdct_pairs = find_freq_part_displacement_cate_tf_pairs(corre_analysis)
+results = []
+for pair in pdct_pairs:
+    for st in range(1, 79):
+        outcome = compare_partial_timeframe(timeframe=int(pair[3]), category=pair[1], start_time=st,displacement=int(pair[0]),part=pair[2])
+        if outcome:
+            results.append(outcome)
+uf.export_nested_list(f"PDCT_pairs.csv",results)
+y = find_freq_part_displacement_cate_pairs(corre_analysis)
+print('')
+
+# Conduct follow up analysis
 for tf in [3,6,9,12]:
     for st in range(1,48):
         for cat in categories:
@@ -206,7 +251,18 @@ for tf in [3,6,9,12]:
                     outcome = compare_partial_timeframe(timeframe=tf, category=cat, start_time=st,displacement=d,part=p)
                     if outcome:
                         results.append(outcome)
-uf.export_nested_list('subsample_partial_correlation_analysis.csv',results)
+
+# # Partial tiem frames
+# results = [['displacement','category','partisanship','timeframe','starttime','correlation','pvalue']]
+# for tf in [3,6,9,12]:
+#     for st in range(1,48):
+#         for cat in categories:
+#             for p in partisanships:
+#                 for d in range(1,6):
+#                     outcome = compare_partial_timeframe(timeframe=tf, category=cat, start_time=st,displacement=d,part=p)
+#                     if outcome:
+#                         results.append(outcome)
+# uf.export_nested_list('subsample_partial_correlation_analysis.csv',results)
 
 # > year time_frame
 # , for cat in categories:
