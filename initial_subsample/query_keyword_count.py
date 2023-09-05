@@ -1,8 +1,8 @@
 import universal_functions as uf
+from bson import ObjectId
 
-
-def fetch_initial_subsample(db):
-    c = db['sampled_articles'].find({'initial_subsample':True})
+def fetch_initial_subsample(db,previous_ids):
+    c = db['sampled_articles'].find({'initial_subsample':True, "_id" : {"$nin": previous_ids}})
     return list(c)
 
 def fetch_cw_data(db,ids):
@@ -38,16 +38,18 @@ def sentiment_exists(cw_data):
 
 
 def count_keyword_in_subsample(db):
-    subsample = fetch_initial_subsample(db)
+    results = uf.import_json('output/subsample_keyword_count.json')
+    prev_ids = [ObjectId(x[0]["$oid"]) for k in results.keys() for x in results[k][1:]]
+    subsample = fetch_initial_subsample(db, prev_ids)
     subsample_ids = [x['_id'] for x in subsample]
 
     cw_data = fetch_cw_data(db, subsample_ids)
     export_missing_elts(cw_data, subsample_ids)
 
-    results = {"Immigration": [['article_id', 'num_unique_kw_per_art', 'num_keywords', 'month', 'year', 'collection', 'partisanship']],
-               "Islamophobia": [['article_id', 'num_unique_kw_per_art', 'num_keywords', 'month', 'year', 'collection', 'partisanship']],
-               "Transphobia":[['article_id', 'num_unique_kw_per_art', 'num_keywords', 'month', 'year', 'collection', 'partisanship']],
-               "Anti-semitism":[['article_id', 'num_unique_kw_per_art', 'num_keywords', 'month', 'year', 'partisanship']]}
+    # results = {"Immigration": [['article_id', 'num_unique_kw_per_art', 'num_keywords', 'month', 'year', 'collection', 'partisanship']],
+    #            "Islamophobia": [['article_id', 'num_unique_kw_per_art', 'num_keywords', 'month', 'year', 'collection', 'partisanship']],
+    #            "Transphobia":[['article_id', 'num_unique_kw_per_art', 'num_keywords', 'month', 'year', 'collection', 'partisanship']],
+    #            "Anti-semitism":[['article_id', 'num_unique_kw_per_art', 'num_keywords', 'month', 'year', 'partisanship']]}
     missing_sentiment = []
     for i in range(len(cw_data)):
         cw_elt = cw_data[i]

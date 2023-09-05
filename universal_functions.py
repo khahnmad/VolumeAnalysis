@@ -88,3 +88,12 @@ def import_json(file):
     with open(file, 'r') as j:
         content = json.loads(j.read())
     return content
+
+
+
+def remove_duplicates(data:list)->list:
+    new_list  =[]
+    for elt in data:
+        if elt not in new_list:
+            new_list.append(elt)
+    return new_list

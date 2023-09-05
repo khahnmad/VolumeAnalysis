@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 data = uf.import_json('initial_subsample/output/subsample_keyword_count.json')
+for k in data.keys():
+    data[k] = uf.remove_duplicates(data[k])
 # data = uf.import_json('sample/output/sample_keyword_count.json')
 partisanships = ['FarLeft', 'Left', 'CenterLeft', 'Center', 'CenterRight', 'Right', 'FarRight']
 categories =['Immigration', 'Islamophobia', 'Transphobia', 'Anti-semitism']
@@ -94,16 +96,16 @@ def fetch_dataframe(category_type, data):
 def send_plot(cat, part, count,w_legend:bool=False):
     if w_legend==True:
         plt.legend()
-    # plt.xticks(rotation=90)
+    plt.xticks(rotation=90)
     plt.xlabel('Time')
     if count=='num_keywords':
         plt.ylabel('Number of Keywords')
     # plt.title(f'{cat}: {part} {count} over time')
-        plt.title(f'Subsample: Number of Keywords Over Time By Topic')
+        plt.title(f'Subsample: {part} Number of Keywords Over Time By Topic')
     else:
         plt.ylabel('Number of Articles with Keywords')
         # plt.title(f'{cat}: {part} {count} over time')
-        plt.title(f'Subsample: Number of Articles with Keywords Over Time By Topic')
+        plt.title(f'Subsample: {part} Number of Articles with Keywords Over Time By Topic')
     plt.show()
 
 
@@ -181,15 +183,15 @@ def plot_count_over_time(count_type:str,partisanship:str,time_bin:str,category:s
 #                 if pt!='all' and ca!='all':
 #                     continue
 #                 plot_count_over_time(ct, pt, tf, ca)
-
-for ct in ['articles_w_keyword','num_keywords']:
-    plot_count_over_time(ct, 'all','year','all')
+#
+# for ct in ['articles_w_keyword','num_keywords']:
+#     plot_count_over_time(ct, 'all','year','all')
 
 # plot_count_over_time('articles_w_keyword','all','month',"Immigration")
 # plot_count_over_time('articles_w_keyword','all','year',"Immigration")
-# plot_count_over_time('./articles_w_keyword','FarLeft','month',"Immigration")
-#
+# plot_count_over_time('articles_w_keyword','FarLeft','month',"Immigration")
+
 # plot_count_over_time('num_keywords','FarLeft','month',"Immigration")
 
-# for p in partisanships:
-#     plot_count_over_time('num_keywords',p,'month','all')
+for p in partisanships:
+    plot_count_over_time('num_keywords',p,'month','all')

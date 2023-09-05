@@ -4,28 +4,13 @@ import universal_functions as uf
 import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.stats import pearsonr
+from collections import Counter
 
 data = uf.import_json('initial_subsample/output/subsample_keyword_count.json')
 # data = uf.import_json('sample/output/sample_keyword_count.json')
 partisanships = ['FarLeft', 'Left', 'CenterLeft', 'Center', 'CenterRight', 'Right', 'FarRight']
 categories =['Immigration', 'Islamophobia', 'Transphobia', 'Anti-semitism']
 
-# # Far Right, 2016 1st half, immigration, num articles with keyword
-# df = pd.DataFrame(data['Immigration'][1:], columns=data['Immigration'][0])
-# df['month'] = df['month'].astype(int)
-# x_source = df.loc[(df['partisanship']=='FarRight') &( df['month'] <=6 ) & (df['year']=='2016')]
-# y_source = df.loc[(df['partisanship']=='Center') &( df['month'] >6 ) & ( df['month'] <=12 ) & (df['year']=='2016')]
-#
-# x, y = [],[]
-# for i in range(1,7):
-#     x.append(len(x_source.loc[(x_source['num_keywords']>0) & (x_source['month']==i)]))
-# for j in range(7,13):
-#     y.append(len(y_source.loc[(y_source['num_keywords']>0) & (y_source['month']==j)]))
-#
-# plt.scatter(x,y)
-# r = np.corrcoef(x, y)
-# print(r)
-# plt.show()
 
 def prep_dataframe(data, category):
     df = pd.DataFrame(data[category][1:],
@@ -61,7 +46,7 @@ def compare_years(category, displacement, partisanship, fr_year):
 
     r = pearsonr(x[1], y[1])
     print(r.correlation)
-    # print(r)
+
     if r.correlation > 0.7:
         plt.plot(x[0], x[1])
         plt.plot(y[0], y[1])
@@ -146,16 +131,16 @@ def compare_full_time_range(category, partisanship, displacement):
     r = pearsonr(x[1], y[1])
 
 
-    if r.correlation > 0.7:
-        print(f"Category: {category}, Far Right + {partisanship}, diplacement={displacement} months")
-        print(r.correlation)
-        plt.plot(x[0], x[1],label='FarRight')
-        plt.plot(y[0], y[1],label=p)
-        plt.xlabel('Time in months')
-        plt.ylabel(f"Number of Articles with Keywords")
-        plt.legend()
-        plt.title(f"Category: {category}, Far Right + {partisanship}, diplacement={displacement} months")
-        plt.show()
+    # if r.correlation > 0.7:
+    print(f"Category: {category}, Far Right + {partisanship}, diplacement={displacement} months")
+    print(r.correlation)
+    plt.plot(x[0], x[1],label='FarRight')
+    plt.plot(y[0], y[1],label=partisanship)
+    plt.xlabel('Time in months')
+    plt.ylabel(f"Number of Articles with Keywords")
+    plt.legend()
+    plt.title(f"Category: {category}, Far Right + {partisanship}, diplacement={displacement} months")
+    plt.show()
 
 def compare_partial_timeframe(timeframe:int, category, start_time,displacement, part):
 
@@ -176,7 +161,7 @@ def compare_partial_timeframe(timeframe:int, category, start_time,displacement, 
 
     r = pearsonr(x[1], y[1])
 
-    if r.correlation > 0.7:
+    # if r.correlation > 0.7:
         # print(f"Category: {category}, Far Right + {part}, diplacement={displacement} months, timeframe={timeframe} months, starting={start_time}")
         # print(r.correlation)
         # plt.plot(x[0], x[1], label='FarRight')
@@ -186,19 +171,18 @@ def compare_partial_timeframe(timeframe:int, category, start_time,displacement, 
         # plt.legend()
         # plt.title(f"Category: {category}, Far Right + {part}, diplacement={displacement} months, timeframe={timeframe} months, starting={start_time}")
         # plt.show()
-        return [displacement,category,part, timeframe, start_time,r.correlation,r.pvalue]
-    return None
+    # return [displacement,category,part, timeframe, start_time,r.correlation,r.pvalue]
+    return r.correlation
 
-# Full time frame
-# for cat in categories:
-#     for p in partisanships:
-#         for d in range(1,13):
-#             compare_full_time_range(cat,p,d)
-#
-# import pandas as pd
-from collections import Counter
-df = pd.read_csv('subsample_partial_correlation_analysis.csv')
-corre_analysis = uf.import_csv('subsample_partial_correlation_analysis.csv')
+
+
+def compare_full_timeline_all_cats_parts():
+    # Full time frame
+    for cat in categories:
+        for p in partisanships:
+            # for d in range(1,13):
+            for d in[1]:
+                compare_full_time_range(cat,p,d)
 
 def find_frequent_partisanship_diplacement_pairs(data):
     dp_pairs = [f"{x[0]} {x[2]}" for x in data]
@@ -230,44 +214,67 @@ def find_freq_part_displacement_cate_tf_pairs(data):
         outcome.append(split_)
     return outcome
 
-pd_pairs = find_frequent_partisanship_diplacement_pairs(corre_analysis)
-pdct_pairs = find_freq_part_displacement_cate_tf_pairs(corre_analysis)
-results = []
-for pair in pdct_pairs:
-    for st in range(1, 79):
-        outcome = compare_partial_timeframe(timeframe=int(pair[3]), category=pair[1], start_time=st,displacement=int(pair[0]),part=pair[2])
-        if outcome:
-            results.append(outcome)
-uf.export_nested_list(f"PDCT_pairs.csv",results)
-y = find_freq_part_displacement_cate_pairs(corre_analysis)
-print('')
 
-# Conduct follow up analysis
-for tf in [3,6,9,12]:
-    for st in range(1,48):
-        for cat in categories:
-            for p in partisanships:
-                for d in range(1,6):
-                    outcome = compare_partial_timeframe(timeframe=tf, category=cat, start_time=st,displacement=d,part=p)
-                    if outcome:
-                        results.append(outcome)
-
+# PLOT high correlations of the full timeline
+compare_full_timeline_all_cats_parts()
+#
 # # Partial tiem frames
 # results = [['displacement','category','partisanship','timeframe','starttime','correlation','pvalue']]
-# for tf in [3,6,9,12]:
+# for tf in [6]:
 #     for st in range(1,48):
 #         for cat in categories:
 #             for p in partisanships:
-#                 for d in range(1,6):
+#                 for d in [1]:
 #                     outcome = compare_partial_timeframe(timeframe=tf, category=cat, start_time=st,displacement=d,part=p)
 #                     if outcome:
 #                         results.append(outcome)
 # uf.export_nested_list('subsample_partial_correlation_analysis.csv',results)
+# #
+# # df = pd.read_csv('subsample_partial_correlation_analysis.csv')
+# corre_analysis = uf.import_csv('subsample_partial_correlation_analysis.csv')
+# #
+# # pd_pairs = find_frequent_partisanship_diplacement_pairs(corre_analysis)
+# # pdct_pairs = find_freq_part_displacement_cate_tf_pairs(corre_analysis)
+# pdc_pairs = find_freq_part_displacement_cate_pairs(corre_analysis)
+# #
+# # results = []
+# # for pair in pdct_pairs:
+# #     for st in range(1, 79):
+# #         outcome = compare_partial_timeframe(timeframe=int(pair[3]), category=pair[1], start_time=st,displacement=int(pair[0]),part=pair[2])
+# #         if outcome:
+# #             results.append(outcome)
+# # uf.export_nested_list(f"PDCT_pairs.csv",results)
+# #
+# df = pd.read_csv("PDCT_pairs.csv",header=None)
+# df.columns = ['displacement','category','partisanship','timeframe','starttime','correlation','pvalue']
 
-# > year time_frame
-# , for cat in categories:
-#     for p in partisanships:
-#         print(p)
-#         for i in range(1,7):
-#             print(i)
-#             compare_within_same_year(cat,i, p)
+# Find the highest correlation over the longest time frame with the smallest displacement
+# 1 displacement, 6 > time frame,
+# for i in range(1,25):
+#     compare_partial_timeframe(timeframe=6, category='Islamophobia', start_time=i,displacement=1, part='Center')
+
+# compare_full_time_range('Islamophobia','Center',1)
+
+
+# Loook for that u shape
+# want correlation to get smaller at the center and then bigger again
+displacement = 1
+time_frame = 83
+category = 'Immigration'
+
+for i in range(1,83):
+    x,y =[],[]
+    for p in partisanships[:-1]:
+        correlation = compare_partial_timeframe(timeframe=time_frame, category=category, start_time=i, displacement=displacement, part=p)
+        x.append(p)
+        y.append(correlation)
+
+    if max(y)>0.5:
+        plt.plot(x,y)
+        plt.title(f'start time: {i}')
+        plt.show()
+
+#Starttime 17,19,20, Immigration, timeframe =12
+#Starttime 18,19,20,22,23,26 Immigration, timeframe =6
+#Starttime 1-6 Islamophobia, timeframe =12
+#Starttime 36, Immigration, timeframe=18
