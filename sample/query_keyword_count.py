@@ -50,7 +50,7 @@ def count_keyword_in_sample(db):
     sample_ids = [x['_id'] for x in sample]
 
     cw_data = fetch_cw_data(db, sample_ids)
-    export_missing_elts(cw_data, sample_ids)
+    # export_missing_elts(cw_data, sample_ids)
 
     # results = {"Immigration": [['article_id', 'num_unique_kw_per_art', 'num_keywords', 'month', 'year', 'partisanship']],
     #            "Islamophobia": [['article_id', 'num_unique_kw_per_art', 'num_keywords', 'month', 'year', 'partisanship']],
@@ -72,8 +72,9 @@ def count_keyword_in_sample(db):
             part = art_elt['sample_id'].split('.')[2]
             outcome = [cw_elt['article_id'], num_unique_kw, num_keywords, month, year, part]
             results[cate].append(outcome)
+        if str(i).endswith('00'):
+            uf.export_as_json(sample_filename, results)
     uf.export_as_json(sample_filename, results)
-
     uf.export_list('output/Sample_Missing_sentiment_ids.csv',missing_sentiment)
 
 fs, db = uf.getConnection(use_dotenv=True)

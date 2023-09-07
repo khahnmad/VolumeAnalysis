@@ -10,6 +10,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\basic_statistcs.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\complete_dataset\initial_subsample\query_keyword_count.py">
           <value>
             <Attribute>
@@ -18,6 +25,48 @@
           </value>
         </entry>
         <entry key="\correlation_analysis.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\correlation_analysis\full_tf_sub_month_displacement.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\correlation_analysis\full_time_frame_cat_part.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\correlation_analysis\get_publication_times.py">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\correlation_analysis\partial_time_frame_cat_part.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\correlation_analysis\partial_time_frame_sub_month_displacement.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\correlation_analysis\visualize_periods_of_high_correlation.py">
           <value>
             <Attribute>
               <option name="separator" value="," />
