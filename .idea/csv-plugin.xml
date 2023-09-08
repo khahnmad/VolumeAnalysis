@@ -66,6 +66,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\correlation_analysis\partisanship_overlap_ranking.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\correlation_analysis\visualize_periods_of_high_correlation.py">
           <value>
             <Attribute>
