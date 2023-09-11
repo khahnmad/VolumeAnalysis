@@ -2,8 +2,8 @@ import universal_functions as uf
 import matplotlib.pyplot as plt
 import pandas as pd
 
-data = uf.import_json('initial_subsample/output/subsample_keyword_count.json')
-# data = uf.import_json('sample/output/sample_keyword_count.json')
+# data = uf.import_json('initial_subsample/output/subsample_keyword_count.json')
+data = uf.import_json('sample/output/sample_keyword_count.json')
 partisanships = ['FarLeft', 'Left', 'CenterLeft', 'Center', 'CenterRight', 'Right', 'FarRight']
 categories =['Immigration', 'Islamophobia', 'Transphobia', 'Anti-semitism']
 
@@ -14,11 +14,11 @@ def send_plot(cat, month, year, count,w_legend:bool=False):
     plt.xlabel('Partisanship')
     if count =='num_keywords':
         plt.ylabel("Number of Keywords")
-        plt.title(f'Subsample: Overall Number of Keywords By Partisanship ')
+        plt.title(f'Overall Number of Keywords By Partisanship ')
         # plt.title(f'Category: {cat}, Month: {month}, Year: {year}; {count} over partisanship')
     else:
         plt.ylabel("Number of Articles with Keywords")
-        plt.title(f'Subsample: Overall Number of Articles with Keywords By Partisanship ')
+        plt.title(f'Overall Number of Articles with Keywords By Partisanship ')
     plt.show()
 
 def combine_data_dictionaries(data, columns):

@@ -122,6 +122,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\viz_count_over_time.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\viz_sentiment.py">
           <value>
             <Attribute>
