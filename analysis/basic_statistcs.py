@@ -7,7 +7,7 @@ import seaborn as sns
 import calendar
 import datetime
 
-data = uf.import_json('initial_subsample/output/subsample_sentiment_count.json')
+data = uf.import_json('../initial_subsample/output/subsample_sentiment_count.json')
 
 partisanships = ['FarLeft', 'Left', 'CenterLeft', 'Center', 'CenterRight', 'Right', 'FarRight']
 categories =['Immigration', 'Islamophobia', 'Transphobia', 'Anti-semitism']

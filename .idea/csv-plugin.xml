@@ -3,6 +3,13 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
+        <entry key="\analysis\sent_partisanship_analysis.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\anova_interaction.py">
           <value>
             <Attribute>
@@ -94,6 +101,27 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\query_data\check_missing_cws.py">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\query_data\check_missing_sentiment.py">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\query_data\check_subsample_download.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\query_keyword_appearances.py">
           <value>
             <Attribute>
@@ -109,6 +137,20 @@
           </value>
         </entry>
         <entry key="\sample\query_keyword_count.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\sample\query_sentiment.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\visualizations\viz_sentiment.py">
           <value>
             <Attribute>
               <option name="separator" value="," />

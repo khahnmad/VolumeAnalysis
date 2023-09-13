@@ -2,8 +2,8 @@ import universal_functions as uf
 import matplotlib.pyplot as plt
 import pandas as pd
 
-data = uf.import_json('initial_subsample/output/subsample_sentiment_count.json')
-# data = uf.import_json('sample/output/sample_keyword_count.json')
+# data = uf.import_json('../initial_subsample/output/subsample_sentiment_count.json')
+data = uf.import_json('../sample/output/sample_sentiment_count_4900.json')['content']
 partisanships = ['FarLeft', 'Left', 'CenterLeft', 'Center', 'CenterRight', 'Right', 'FarRight']
 categories =['Immigration', 'Islamophobia', 'Transphobia', 'Anti-semitism']
 
@@ -173,3 +173,5 @@ plot_sentiment(x_axis='partisanship',y_axis='avg_sentiment',by='category',catego
 plot_sentiment(x_axis='partisanship',y_axis='avg_sentiment_per_article',by='category',category='all',time_frame='')
 plot_sentiment(x_axis='time',y_axis='avg_sentiment_per_article',by='partisanship',category='all',time_frame='year')
 plot_sentiment(x_axis='time',y_axis='avg_sentiment_per_article',by='partisanship',category='all',time_frame='month')
+
+# average sentiment by partisanship?

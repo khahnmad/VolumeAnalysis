@@ -9,7 +9,7 @@ def fetch_pub_times(article_ids):
 fs,db = uf.getConnection(use_dotenv=True)
 
 def get_pubtimes_for_subsample():
-    data = uf.import_json('../initial_subsample/output/subsample_keyword_count.json')
+    data = uf.import_json('../../initial_subsample/output/subsample_keyword_count.json')
     for k in data.keys():
         data[k] = uf.remove_duplicates(data[k])
 
@@ -19,10 +19,10 @@ def get_pubtimes_for_subsample():
             matching_item = [x for x in data[k][1:] if ObjectId(x[0]["$oid"]) == pub_times[i]['_id']][0]
             matching_item.append(pub_times[i]['publish_date'])
 
-    uf.export_as_json('subsample_keyword_count_w_pubtime_no_duplicates.json',data)
+    uf.export_as_json('subsample_keyword_count_w_pubtime_no_duplicates.json', data)
 
 def get_pubtimes_for_sample():
-    data = uf.import_json('../sample/output/sample_keyword_count.json')
+    data = uf.import_json('../../sample/output/sample_keyword_count.json')
     for k in data.keys():
         data[k] = uf.remove_duplicates(data[k])
 

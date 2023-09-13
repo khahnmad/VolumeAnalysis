@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # data = uf.import_json('initial_subsample/output/subsample_keyword_count.json')
-data = uf.import_json('sample/output/sample_keyword_count.json')
+data = uf.import_json('../sample/output/sample_keyword_count.json')
 partisanships = ['FarLeft', 'Left', 'CenterLeft', 'Center', 'CenterRight', 'Right', 'FarRight']
 categories =['Immigration', 'Islamophobia', 'Transphobia', 'Anti-semitism']
 

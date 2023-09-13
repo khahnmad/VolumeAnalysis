@@ -4,7 +4,7 @@ import pandas as pd
 
 # data = uf.import_json('initial_subsample/output/subsample_keyword_count.json')
 
-data = uf.import_json('sample/output/sample_keyword_count.json')
+data = uf.import_json('../sample/output/sample_keyword_count.json')
 for k in data.keys():
     data[k] = uf.remove_duplicates(data[k])
 partisanships = ['FarLeft', 'Left', 'CenterLeft', 'Center', 'CenterRight', 'Right', 'FarRight']
